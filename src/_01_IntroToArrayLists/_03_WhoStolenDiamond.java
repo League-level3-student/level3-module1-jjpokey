@@ -15,32 +15,45 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
-public class _03_MurderOfCrows {
+public class _03_WhoStolenDiamond {
 
     ArrayList<Crow> theMurder = new ArrayList<Crow>();
 
     public static void main(String[] args) {
-        _03_MurderOfCrows murderOfCrows = new _03_MurderOfCrows();
+        _03_WhoStolenDiamond murderOfCrows = new _03_WhoStolenDiamond();
         murderOfCrows.initializeCrows();
         murderOfCrows.findTheDiamond();
     }
 
     private void findTheDiamond() {
+    	int storage = 0;
         /*
          * 1. One of the Crows has eaten the diamond. You need to search through the stomach of each Crow, 
          * then print the name of the guilty Crow.
          */
-        
+        for(int c = 0; c < theMurder.size(); c++) {
+        	
+        	ArrayList<String> findStomachContents = theMurder.get(c).getStomachContents(); 
+        	//System.out.println(findStomachContents);
+        	if(findStomachContents.contains("diamond")) {
+        		System.out.println(theMurder.get(c).getName() + " stole the diamond");
+        		storage = c;
+
+        		
+        	}
+        	
+        	
+        }
         /* 2. How many innocent crows had to die before the diamond was found? */
-    	
+        System.out.println(storage + 1 + " famous people were accused before the diamond was found...");
     }
 
     private void initializeCrows() {
-        theMurder.add(new Crow("Rok"));
-        theMurder.add(new Crow("Merle"));
-        theMurder.add(new Crow("Poe"));
-        theMurder.add(new Crow("Grenwyn"));
-        theMurder.add(new Crow("Crawford"));
+        theMurder.add(new Crow("Will Smith"));
+        theMurder.add(new Crow("Adam Sandlers"));
+        theMurder.add(new Crow("Justin Beiber"));
+        theMurder.add(new Crow("Howie Mandel"));
+        theMurder.add(new Crow("Kevin Hart"));
         hideTheDiamond();
     }
 

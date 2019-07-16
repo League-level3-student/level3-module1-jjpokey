@@ -2,12 +2,19 @@ package _03_IntroToStacks;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.nio.charset.Charset;
+import java.util.Stack;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class _02_TextUndoRedo implements KeyListener {
+	
+	public static void main(String[] args) {
+		_02_TextUndoRedo clas = new _02_TextUndoRedo();
+		clas.method();
+	}
 	/* 
 	 * Create a JFrame with a JPanel and a JLabel.
 	 * DONE
@@ -23,23 +30,47 @@ public class _02_TextUndoRedo implements KeyListener {
 	  JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel();
-
+		Stack<String> removed = new Stack<String>();
+		String c;
+		
+		
+		
 	public void method() {
 		frame.add(panel);
-		frame.add(label);
+		panel.add(label);
 		frame.addKeyListener(this);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+		frame.pack();
+		frame.setSize(800, 500);
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
+		
 		if(e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
-			//label.remove();
-			//HERE, REMOVE LAST CHAR TYPED............................
+c = label.getText();
+label.setText(c.substring(0, c.length() - 1));
+
+removed.push(c.substring(c.length() - 1));
+			
 		}
+		
+		else if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+			if(!removed.isEmpty()) {
+			c = label.getText() + removed.pop();
+			label.setText(c);
+			}
+		}
+		else {
+			label.setText(label.getText() + e.getKeyChar() + "");
+		}
+		
+			
 		
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
-		label.setText(e.getKeyChar() + "");
+		
 		
 	}
 	@Override

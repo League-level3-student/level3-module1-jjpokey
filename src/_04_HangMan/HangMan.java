@@ -19,8 +19,10 @@ public class HangMan implements KeyListener{
 	String charsinword = "";
 	int Lives = 10;
 	static String characters = "";
+	int update = 0;
 	
 	public static void main(String[] args) {
+		
 		//method calling and starting input
 		Stack<String> stack = new Stack<String>();
 		String number = JOptionPane.showInputDialog("Welcome to Hang Man! \n" + "How many words would you like to guess?");
@@ -34,7 +36,8 @@ public class HangMan implements KeyListener{
 	
 	}
 		for(int i = 0; i < num; i++) {
-			characters = stack.pop();
+			//characters = stack.pop();
+			characters = "congratulation";
 			
 			charNumber = characters.length();
 			
@@ -54,13 +57,15 @@ public class HangMan implements KeyListener{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		frame.pack();
 		frame.setSize(200, 50);
-		label.addKeyListener(this);
+		frame.addKeyListener(this);
 		
 	}
 	public void getChars() {
 		for(int a = 0; a < charNumber; a++) {
+			if(update != 1) {
 			charsinword += "_";
-					
+			}
+			
 			label.setText(charsinword + "     " + Lives + " lives left!");
 		}
 		
@@ -70,7 +75,7 @@ public class HangMan implements KeyListener{
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -78,21 +83,26 @@ public class HangMan implements KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		String t = "";
-		for(int j = 0; j < charNumber; j++) {
+		System.out.println(characters);
+	String savedChar = "" + e.getKeyChar();
+		for(int j = 0; j < charNumber; j++) { //charNumber = length of word (int)
+	if(e.getKeyChar() == characters.charAt(j)) { //characters = word (string)
+			update = 1;
+			System.out.println(charsinword.length());
+			String lower = charsinword.substring(0, j);
+			String higher = charsinword.substring(j + 1, charNumber);
+			charsinword = lower + savedChar + higher;
+			System.out.println(charsinword.length());
+		getChars();
 			
-		if(e.getKeyChar() == characters.charAt(j)) {
-			t += e.getKeyChar();
-			//charsinword.replace(charsinword.charAt(j), e.getKeyChar());
-			
-		}
-		else {
-			t += charsinword.charAt(j);
-			//figure out loop and replacing
 		}
 		
 		}
-		charsinword = t;
+		Lives -= 1;
+		if(Lives < 1) {
+			//end
+		}
+		charsinword = savedChar;
 	}
 
 
